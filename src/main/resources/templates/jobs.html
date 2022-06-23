@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Jobs</title>
+	<link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+<div id="content">
+	<div th:text="${'Jobs Found: ' + jobs.size()}"></div>
+	<div th:each="job:${jobs}">
+		<div class="job">
+			<a class="job-title" th:href="${job.url}" th:text="${job.title}" target="_blank"></a>
+			<div class="job-status" th:text="${job.status}"></div>
+			<div class="company" th:text="${job.company + ' - ' + job.subtitle}"></div>
+			<div class="description" th:utext="${job.description}"></div>
+		</div>
+		<hr>
+	</div>
+</div>
+</body>
+
+
+</html>

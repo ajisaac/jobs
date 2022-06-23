@@ -1,0 +1,26 @@
+#content {
+    max-width: 900px;
+    margin: auto;
+}
+
+.job {
+    margin-top: 100px;
+}
+
+.job-title {
+    font-weight: bold;
+}
+
+.job-status {
+    font-weight: bolder;
+    font-size: 1.4rem;
+    color: green;
+}
+
+.company {
+    font-weight: bolder;
+}
+
+.description {
+    margin-top: 40px;
+}
