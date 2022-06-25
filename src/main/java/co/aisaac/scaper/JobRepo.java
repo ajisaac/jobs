@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface JobRepo extends CrudRepository<Job, Integer> {
+public interface JobRepo extends CrudRepository<Job, Long> {
 	List<Job> findAll();
 }

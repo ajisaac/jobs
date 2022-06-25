@@ -1,50 +1,44 @@
 package co.aisaac.scaper;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 public class Filter {
-	/*
-			Statuses
+	public Filter() {
+	}
 
-			- New
-			- Decline
-			- Interested
-			- Applied
-			- Interviewing
-			- Rejected
+	boolean statusNew = true;
+	boolean declined = true;
+	boolean interested = true;
+	boolean applied = true;
+	boolean interviewing = true;
+	boolean rejected = true;
 
-	Show if the company already has other postings that you have assigned non new status
-	to. This way we can see what we already thought of some of their job postings and
-	it might jog our memory.
+	List<String> getStatuses() {
+		List<String> statuses = new ArrayList<>();
+		if (statusNew)
+			statuses.add("new");
+		if (declined)
+			statuses.add("declined");
+		if (interested)
+			statuses.add("interestd");
+		if (applied)
+			statuses.add("applied");
+		if (interviewing)
+			statuses.add("interviewing");
+		if (rejected)
+			statuses.add("rejected");
 
-	Filter by status. We should definitely want to see jobs of a certain status, like applied.
+		return statuses;
+	}
 
-	Filter by company. To see all jobs by company regardless of status.
+	String companySearch = "";
 
-	Filter by companies with a certain status. To see all of the companies that have a certain status.
-
-	Filter by search term. Search makes sense, even better if added highlighting.
-
-	Notes on the job, should be easy to add notes to keep track.
-
-
-	 */
-
-
-	// only show jobs that have one of these
-	public List<String> containsStatuses;
-
-	// only show jobs with these companies
-	public List<String> containsCompanies;
-
-	// don't show any of these companies
-	public List<String> blacklistCompanies;
-
-	// show jobs with these search terms
-	public List<String> searchTerms;
-
-	// show jobs by companies that have a certain status
-	// for instance, show us all jobs that belong to companies we have already applied
-	public List<String> companyStatuses;
+	String searchTerms = "";
 
 }

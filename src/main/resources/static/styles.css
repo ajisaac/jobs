@@ -4,7 +4,8 @@
 }
 
 .job {
-    margin-top: 100px;
+    margin-top: 20px;
+    margin-bottom: 100px;
 }
 
 .job-title {
@@ -23,4 +24,46 @@
 
 .description {
     margin-top: 40px;
+}
+
+.status-updater {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.status-updater > div {
+    display: inline;
+    text-decoration: underline;
+    color: blue;
+    margin-right: 10px;
+    user-select: none;
+}
+
+.status-updater > div:hover {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.status-filters > label {
+    margin-left: 30px;
+}
+
+.status-filters > label, .status-filters > input {
+    user-select: none;
+}
+
+.status-filters > label:hover, .status-filters > input:hover {
+    user-select: none;
+    cursor: pointer;
+}
+
+.input {
+    margin-bottom: 10px;
+}
+
+.highlight {
+    background-color: aqua;
 }

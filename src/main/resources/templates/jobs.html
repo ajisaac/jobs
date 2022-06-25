@@ -7,17 +7,86 @@
 
 <body>
 <div id="content">
+	<div>
+		<form action="#" th:action="@{/}" th:object="${filter}" method="post">
+			<fieldset>
+				<legend>Filters</legend>
+				<div>
+					<div class="input status-filters">
+						<label th:for="new" th:text="new"></label>
+						<input id="new" name="new" type="checkbox" th:field="*{statusNew}"/>
+
+						<label th:for="declined" th:text="declined"></label>
+						<input id="declined" name="declined" type="checkbox" th:field="*{declined}"/>
+
+						<label th:for="interested" th:text="interested"></label>
+						<input id="interested" name="interested" type="checkbox" th:field="*{interested}"/>
+
+						<label th:for="applied" th:text="applied"></label>
+						<input id="applied" name="applied" type="checkbox" th:field="*{applied}"/>
+
+						<label th:for="interviewing" th:text="interviewing"></label>
+						<input id="interviewing" name="interviewing" type="checkbox" th:field="*{interviewing}"/>
+
+						<label th:for="rejected" th:text="rejected"></label>
+						<input id="rejected" name="rejected" type="checkbox" th:field="*{rejected}"/>
+					</div>
+					<div class="input">
+						<label for="companySearch">Companies</label>
+						<input type="text" name="companySearch" id="companySearch" th:value="*{companySearch}"/>
+					</div>
+					<div class="input">
+						<label for="searchTerms">Search Terms</label>
+						<input type="text" name="searchTerms" id="searchTerms" th:value="*{searchTerms}"/>
+					</div>
+					<input type="submit" value="Search">
+				</div>
+			</fieldset>
+		</form>
+	</div>
 	<div th:text="${'Jobs Found: ' + jobs.size()}"></div>
 	<div th:each="job:${jobs}">
 		<div class="job">
 			<a class="job-title" th:href="${job.url}" th:text="${job.title}" target="_blank"></a>
 			<div class="job-status" th:text="${job.status}"></div>
+			<div class="status-updater">
+				<div th:if="${job.status != 'new'}" class="status-link" th:data-id="${job.id}" th:data-status="new">new</div>
+				<div th:if="${job.status != 'declined'}" class="status-link" th:data-id="${job.id}" th:data-status="declined">
+					declined
+				</div>
+				<div th:if="${job.status != 'interested'}" class="status-link" th:data-id="${job.id}"
+						 th:data-status="interested">interested
+				</div>
+				<div th:if="${job.status != 'applied'}" class="status-link" th:data-id="${job.id}" th:data-status="applied">
+					applied
+				</div>
+				<div th:if="${job.status != 'interviewing'}" class="status-link" th:data-id="${job.id}"
+						 th:data-status="interviewing">interviewing
+				</div>
+				<div th:if="${job.status != 'rejected'}" class="status-link" th:data-id="${job.id}" th:data-status="rejected">
+					rejected
+				</div>
+			</div>
 			<div class="company" th:text="${job.company + ' - ' + job.subtitle}"></div>
 			<div class="description" th:utext="${job.description}"></div>
+			<hr>
 		</div>
-		<hr>
 	</div>
 </div>
 </body>
-
+<script>
+    let links = document.getElementsByClassName("status-link")
+    for (let i in links) {
+        let link = links[i]
+        let id = link.dataset.id
+        let status = link.dataset.status
+        link.addEventListener("click", () => {
+            fetch("/status/" + id + "/" + status, {method: "POST"})
+                .then(response => {
+                    if (response.status === 200)
+                        link.closest(".job").remove()
+                })
+        })
+    }
+</script>
 </html>
