@@ -26,7 +26,7 @@ public class Filter {
 		if (declined)
 			statuses.add("declined");
 		if (interested)
-			statuses.add("interestd");
+			statuses.add("interested");
 		if (applied)
 			statuses.add("applied");
 		if (interviewing)

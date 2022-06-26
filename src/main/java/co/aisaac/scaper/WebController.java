@@ -10,9 +10,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 @Controller
@@ -29,7 +33,11 @@ public class WebController {
 
 	@GetMapping("/")
 	public String all(Model model) {
-		List<Job> jobs = filterJobs(filter, repo.findAll());
+		List<Job> jobs = repo.findAll();
+		augmentCompanies(jobs);
+
+		jobs = filterJobs(filter, repo.findAll());
+
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("filter", filter);
 		return "jobs";
@@ -98,7 +106,7 @@ public class WebController {
 			}).toList();
 		}
 
-		filtered = highlight(searchTerms, filtered);
+		highlight(searchTerms, filtered);
 
 		// sort
 		filtered = filtered.stream()
@@ -108,11 +116,34 @@ public class WebController {
 		return filtered;
 	}
 
-	private List<Job> highlight(List<String> searchTerms, List<Job> filtered) {
+	private void augmentCompanies(List<Job> jobs) {
+		// add statuses to each company
+
+		Map<String, Set<String>> comps = new HashMap<>();
+
+		for (Job job : jobs) {
+			var comp = job.company;
+			var status = job.status;
+			if (comps.containsKey(comp)) {
+				comps.get(comp).add(status);
+			} else {
+				comps.put(comp, new HashSet<>());
+				comps.get(comp).add(status);
+			}
+		}
+
+		for (Job job : jobs) {
+			var statuses = comps.get(job.company);
+			job.companyStatuses = statuses.stream().toList();
+		}
+
+	}
+
+	private void highlight(List<String> searchTerms, List<Job> filtered) {
 		if (searchTerms.isEmpty())
-			return filtered;
+			return;
 		if (filtered.isEmpty())
-			return filtered;
+			return;
 
 		for (String searchTerm : searchTerms) {
 			String pattern = "(?i)" + Pattern.quote(searchTerm.trim());
@@ -122,6 +153,5 @@ public class WebController {
 				job.description = job.description.replaceAll(pattern, st);
 			}
 		}
-		return filtered;
 	}
 }

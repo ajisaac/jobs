@@ -67,3 +67,11 @@
 .highlight {
     background-color: aqua;
 }
+
+.company-status {
+    font-weight: bolder;
+    font-size: 1.2rem;
+    color: royalblue;
+    background-color: lavender;
+    margin: 10px 10px;
+}

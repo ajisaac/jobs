@@ -68,6 +68,9 @@
 				</div>
 			</div>
 			<div class="company" th:text="${job.company + ' - ' + job.subtitle}"></div>
+			<span class="company-status" th:each="status:${job.companyStatuses}" th:text="${status}">
+<!--				<span class="company-status" th:text="${status}"></span>-->
+			</span>
 			<div class="description" th:utext="${job.description}"></div>
 			<hr>
 		</div>
