@@ -20,6 +20,12 @@
 
 .company {
     font-weight: bolder;
+    margin-bottom: 10px;
+}
+
+.blacklist {
+    margin-left: 20px;
+    display: inline;
 }
 
 .description {

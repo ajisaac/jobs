@@ -3,6 +3,7 @@ package co.aisaac.scaper;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
@@ -25,4 +26,7 @@ public class Job {
 	String subtitle;
 	String description;
 	String status;
+
+	@Column(name = "search_term")
+	String searchTerm;
 }
