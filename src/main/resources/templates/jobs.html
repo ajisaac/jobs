@@ -22,6 +22,9 @@
                         <label th:for="interested" th:text="interested"></label>
                         <input id="interested" name="interested" type="checkbox" th:field="*{interested}"/>
 
+                        <label th:for="later" th:text="later"></label>
+                        <input id="later" name="later" type="checkbox" th:field="*{later}"/>
+
                         <label th:for="applied" th:text="applied"></label>
                         <input id="applied" name="applied" type="checkbox" th:field="*{applied}"/>
 
@@ -50,26 +53,26 @@
             <a class="job-title" th:href="${job.url}" th:text="${job.title}" target="_blank"></a>
             <div class="job-status" th:text="${job.status}"></div>
             <div class="status-updater">
-                <div th:if="${job.status != 'new'}" class="status-link" th:data-id="${job.id}" th:data-status="new">
-                    new
+                <div th:if="${job.status != 'new'}" class="status-link" th:data-id="${job.id}"
+                     th:data-status="new"> new
                 </div>
                 <div th:if="${job.status != 'declined'}" class="status-link" th:data-id="${job.id}"
-                     th:data-status="declined">
-                    declined
+                     th:data-status="declined"> declined
                 </div>
                 <div th:if="${job.status != 'interested'}" class="status-link" th:data-id="${job.id}"
                      th:data-status="interested">interested
                 </div>
+                <div th:if="${job.status != 'later'}" class="status-link" th:data-id="${job.id}"
+                     th:data-status="later">later
+                </div>
                 <div th:if="${job.status != 'applied'}" class="status-link" th:data-id="${job.id}"
-                     th:data-status="applied">
-                    applied
+                     th:data-status="applied"> applied
                 </div>
                 <div th:if="${job.status != 'interviewing'}" class="status-link" th:data-id="${job.id}"
                      th:data-status="interviewing">interviewing
                 </div>
                 <div th:if="${job.status != 'rejected'}" class="status-link" th:data-id="${job.id}"
-                     th:data-status="rejected">
-                    rejected
+                     th:data-status="rejected"> rejected
                 </div>
             </div>
             <div class="company">
@@ -78,9 +81,7 @@
                     <input type="submit" value="blacklist">
                 </form>
             </div>
-            <span class="company-status" th:each="status:${job.companyStatuses}" th:text="${status}">
-<!--				<span class="company-status" th:text="${status}"></span>-->
-			</span>
+            <span class="company-status" th:each="status:${job.companyStatuses}" th:text="${status}"/>
             <div class="description" th:utext="${job.description}"></div>
             <hr>
         </div>

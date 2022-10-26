@@ -76,6 +76,7 @@ public class WebController {
 
     private List<Job> filterJobs(Filter filter, List<Job> all) {
 
+        // filter status
         List<String> statuses = filter.getStatuses();
         List<Job> filtered = new ArrayList<>(all);
         if (!statuses.isEmpty()) {
@@ -88,6 +89,7 @@ public class WebController {
             }).toList();
         }
 
+        // filter company
         List<String> companies = Arrays.stream(filter.companySearch.split(",")).filter(s -> !s.isBlank()).toList();
         if (!companies.isEmpty()) {
             filtered = filtered.stream().filter(job -> {
@@ -100,6 +102,7 @@ public class WebController {
         }
 
 
+        // filter search term
         List<String> searchTerms = Arrays.stream(filter.searchTerms.split(",")).filter(s -> !s.isBlank()).toList();
         if (!searchTerms.isEmpty()) {
             filtered = filtered.stream().filter(job -> {
@@ -116,6 +119,7 @@ public class WebController {
             }).toList();
         }
 
+        // highlight search term
         highlight(searchTerms, filtered);
 
         // sort

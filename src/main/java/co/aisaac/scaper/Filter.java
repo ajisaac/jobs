@@ -9,36 +9,38 @@ import java.util.List;
 @Getter
 @Setter
 public class Filter {
-	public Filter() {
-	}
+    public Filter() {
+    }
 
-	boolean statusNew = true;
-	boolean declined = true;
-	boolean interested = true;
-	boolean applied = true;
-	boolean interviewing = true;
-	boolean rejected = true;
+    boolean statusNew = true;
+    boolean declined = true;
+    boolean interested = true;
+    boolean applied = true;
+    boolean interviewing = true;
+    boolean rejected = true;
+    boolean later = true;
 
-	List<String> getStatuses() {
-		List<String> statuses = new ArrayList<>();
-		if (statusNew)
-			statuses.add("new");
-		if (declined)
-			statuses.add("declined");
-		if (interested)
-			statuses.add("interested");
-		if (applied)
-			statuses.add("applied");
-		if (interviewing)
-			statuses.add("interviewing");
-		if (rejected)
-			statuses.add("rejected");
+    List<String> getStatuses() {
+        List<String> statuses = new ArrayList<>();
+        if (statusNew)
+            statuses.add("new");
+        if (declined)
+            statuses.add("declined");
+        if (interested)
+            statuses.add("interested");
+        if (applied)
+            statuses.add("applied");
+        if (interviewing)
+            statuses.add("interviewing");
+        if (rejected)
+            statuses.add("rejected");
+        if (later)
+            statuses.add("later");
+        return statuses;
+    }
 
-		return statuses;
-	}
+    String companySearch = "";
 
-	String companySearch = "";
-
-	String searchTerms = "";
+    String searchTerms = "";
 
 }
