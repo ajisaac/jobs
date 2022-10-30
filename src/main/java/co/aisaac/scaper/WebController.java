@@ -94,7 +94,7 @@ public class WebController {
         if (!companies.isEmpty()) {
             filtered = filtered.stream().filter(job -> {
                 for (String company : companies)
-                    if (job.company.trim().contains(company.trim()))
+                    if (job.company.trim().toLowerCase(Locale.ROOT).contains(company.trim().toLowerCase(Locale.ROOT)))
                         return true;
 
                 return false;
@@ -118,6 +118,19 @@ public class WebController {
                 return false;
             }).toList();
         }
+
+        // filter title
+        List<String> titleSearchTerms = Arrays.stream(filter.titleSearch.split(",")).filter(s -> !s.isBlank()).toList();
+        if (!titleSearchTerms.isEmpty()) {
+            filtered = filtered.stream().filter(job -> {
+                for (String term : titleSearchTerms) {
+                    if (job.title.toLowerCase(Locale.ROOT).contains(term.trim().toLowerCase()))
+                        return true;
+                }
+                return false;
+            }).toList();
+        }
+
 
         // highlight search term
         highlight(searchTerms, filtered);

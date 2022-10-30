@@ -43,4 +43,6 @@ public class Filter {
 
     String searchTerms = "";
 
+    String titleSearch = "";
+
 }
