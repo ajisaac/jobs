@@ -82,3 +82,15 @@
     background-color: lavender;
     margin: 10px 10px;
 }
+
+.menu-href {
+    margin-right: 10px;
+}
+
+.errors {
+    margin: 10px;
+}
+
+.errors > div {
+    color: red;
+}
