@@ -13,12 +13,12 @@ public class Filter {
     }
 
     boolean statusNew = true;
-    boolean declined = true;
-    boolean interested = true;
-    boolean applied = true;
-    boolean interviewing = true;
-    boolean rejected = true;
-    boolean later = true;
+    boolean declined;
+    boolean interested;
+    boolean applied;
+    boolean interviewing;
+    boolean rejected;
+    boolean later;
 
     List<String> getStatuses() {
         List<String> statuses = new ArrayList<>();

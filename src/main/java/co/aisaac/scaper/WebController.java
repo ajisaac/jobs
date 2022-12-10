@@ -175,7 +175,6 @@ public class WebController {
             var statuses = comps.get(job.company);
             job.companyStatuses = statuses.stream().toList();
         }
-
     }
 
     private void highlight(List<String> searchTerms, List<Job> filtered) {
