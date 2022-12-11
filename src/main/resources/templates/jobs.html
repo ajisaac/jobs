@@ -98,8 +98,12 @@
     let links = document.getElementsByClassName("status-link")
     for (let i in links) {
         let link = links[i]
-        let id = link.dataset.id
-        let status = link.dataset.status
+        let id = link?.dataset?.id
+        let status = link?.dataset?.status
+
+        if (id === undefined || status === undefined)
+            continue
+
         link.addEventListener("click", () => {
             fetch("/status/" + id + "/" + status, {method: "POST"})
                 .then(response => {
