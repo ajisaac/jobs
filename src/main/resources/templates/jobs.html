@@ -51,7 +51,7 @@
 			</fieldset>
 		</form>
 	</div>
-	<div th:text="${'Jobs Found: ' + jobs.size()}"></div>
+	<div class="jobs-found" th:text="${'Jobs Found: ' + jobs.size()}"></div>
 	<div th:each="job:${jobs}">
 		<div class="job">
 			<a class="job-title" th:href="${job.url}" th:text="${job.title}" target="_blank"></a>
@@ -90,6 +90,11 @@
 </div>
 </body>
 <script>
+    function decreaseJobsFound(jobsFoundText) {
+        let string = jobsFoundText.substring(11);
+        return "Jobs Found: " + (parseInt(string) - 1)
+    }
+
     let links = document.getElementsByClassName("status-link")
     for (let i in links) {
         let link = links[i]
@@ -102,8 +107,11 @@
         link.addEventListener("click", () => {
             fetch("/status/" + id + "/" + status, {method: "POST"})
                 .then(response => {
-                    if (response.status === 200)
+                    if (response.status === 200) {
                         link.closest(".job").remove()
+                        let jobsFoundDiv = document.getElementsByClassName("jobs-found").item(0)
+                        jobsFoundDiv.innerText = decreaseJobsFound(jobsFoundDiv.innerText)
+                    }
                 })
         })
     }
