@@ -7,8 +7,6 @@
 
 <body>
 <div id="content">
-	<a href="/" class="menu-href">Home</a>
-	<a href="/add-job" class="menu-href">Add Job</a>
 	<div>
 		<form action="#" th:action="@{/}" th:object="${filter}" method="post">
 			<fieldset>
@@ -83,9 +81,6 @@
 			</div>
 			<div class="company">
 				<span th:text="${job.company + ' - ' + job.subtitle}"/>
-				<form class="blacklist" action="#" th:action="${'/blacklist/' + job.company}" method="post">
-					<input type="submit" value="blacklist">
-				</form>
 			</div>
 			<span class="company-status" th:each="status:${job.companyStatuses}" th:text="${status}"/>
 			<div class="description" th:utext="${job.description}"></div>

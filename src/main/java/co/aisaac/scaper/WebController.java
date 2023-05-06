@@ -23,13 +23,11 @@ import java.util.regex.Pattern;
 public class WebController {
 
     private final JobRepo repo;
-    private final BlacklistCompanyRepo bcRepo;
 
     private Filter filter;
 
-    public WebController(JobRepo repo, BlacklistCompanyRepo bcRepo) {
+    public WebController(JobRepo repo) {
         this.repo = repo;
-        this.bcRepo = bcRepo;
         this.filter = new Filter();
     }
 
@@ -37,7 +35,6 @@ public class WebController {
     public String all(Model model) {
         List<Job> jobs = repo.findAll();
 
-        jobs = filterBlacklisted(jobs);
         augmentCompanies(jobs);
 
         jobs = filterJobs(filter, jobs);
@@ -46,7 +43,6 @@ public class WebController {
         model.addAttribute("filter", filter);
         return "jobs";
     }
-
 
     @PostMapping("/")
     public String allFiltered(Filter filter) {
@@ -66,12 +62,6 @@ public class WebController {
         job.setStatus(status);
         repo.save(job);
         return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/blacklist/{company}")
-    public String blacklist(@PathVariable String company) {
-        bcRepo.save(new BlacklistCompany(company));
-        return "redirect:/";
     }
 
     private List<Job> filterJobs(Filter filter, List<Job> all) {
@@ -141,18 +131,6 @@ public class WebController {
                 .toList();
 
         return filtered;
-    }
-
-    private List<Job> filterBlacklisted(List<Job> jobs) {
-        List<BlacklistCompany> all = bcRepo.findAll();
-        return jobs.stream().filter(job -> {
-            for (BlacklistCompany blacklistCompany : all) {
-                if (job.company.equalsIgnoreCase(blacklistCompany.name)) {
-                    return false;
-                }
-            }
-            return true;
-        }).toList();
     }
 
     private void augmentCompanies(List<Job> jobs) {
