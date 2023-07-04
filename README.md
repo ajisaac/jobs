@@ -16,3 +16,6 @@ Scrape multiple boards not just indeed
 Handle expired listings, scan from time to time
 
 Tool for writing cover letters
+
+Add code scanning
+Add JFR and other tooling
