@@ -5,7 +5,7 @@ on: [ push ]
 env:
   AWS_REGION: us-west-2                           # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY: job-scraper                     # set this to your Amazon ECR repository name
-  ECS_SERVICE: job-scraper-frontend-service       # set this to your Amazon ECS service name
+  ECS_SERVICE: job-scraper-frontend-ecs-service   # set this to your Amazon ECS service name
   ECS_CLUSTER: prod-cluster                       # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .aws/task-definition.json  # set this to the path to your Amazon ECS task definition
   CONTAINER_NAME: job-scraper-frontend            # set this to the name of the container in the containerDefinitions section of your task definition
