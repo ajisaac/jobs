@@ -30,6 +30,20 @@
         <li><a th:href="@{/}">home</a></li>
         <li><a th:href="@{/titles}">titles</a></li>
     </ul>
+    <div>
+        <form action="#" th:action="@{/titles}" th:object="${filter}" method="post">
+            <fieldset>
+                <legend>Filters</legend>
+                <div>
+                    <div class="input">
+                        <label for="titleSearch">Title Search</label>
+                        <input type="text" name="titleSearch" id="titleSearch" th:value="*{titleSearch}"/>
+                    </div>
+                    <input type="submit" value="Search">
+                </div>
+            </fieldset>
+        </form>
+    </div>
     <br>
     <div class="jobs-found" th:text="${'Jobs Found: ' + jobs.size()}"></div>
     <br>

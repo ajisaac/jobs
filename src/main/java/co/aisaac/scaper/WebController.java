@@ -24,11 +24,11 @@ public class WebController {
 
     private final JobRepo jobRepo;
 
-    private Filter filter;
+    private MainFilter filter;
 
     public WebController(JobRepo jobRepo) {
         this.jobRepo = jobRepo;
-        this.filter = new Filter();
+        this.filter = new MainFilter();
     }
 
     @GetMapping("/")
@@ -40,12 +40,12 @@ public class WebController {
         jobs = filterJobs(filter, jobs);
 
         model.addAttribute("jobs", jobs);
-        model.addAttribute("filter", filter);
+        model.addAttribute("mainFilter", filter);
         return "jobs";
     }
 
     @PostMapping("/")
-    public String allFiltered(Filter filter) {
+    public String allFiltered(MainFilter filter) {
         this.filter = filter;
         return "redirect:/";
     }
@@ -64,10 +64,10 @@ public class WebController {
         return ResponseEntity.ok().build();
     }
 
-    private List<Job> filterJobs(Filter filter, List<Job> all) {
+    private List<Job> filterJobs(MainFilter mainFilter, List<Job> all) {
 
         // filter status
-        List<String> statuses = filter.getStatuses();
+        List<String> statuses = mainFilter.getStatuses();
         List<Job> filtered = new ArrayList<>(all);
         if (!statuses.isEmpty()) {
             filtered = filtered.stream().filter(job -> {
@@ -80,7 +80,7 @@ public class WebController {
         }
 
         // filter company
-        List<String> companies = Arrays.stream(filter.companySearch.split(",")).filter(s -> !s.isBlank()).toList();
+        List<String> companies = Arrays.stream(mainFilter.companySearch.split(",")).filter(s -> !s.isBlank()).toList();
         if (!companies.isEmpty()) {
             filtered = filtered.stream().filter(job -> {
                 for (String company : companies)
@@ -93,7 +93,7 @@ public class WebController {
 
 
         // filter search term
-        List<String> searchTerms = Arrays.stream(filter.searchTerms.split(",")).filter(s -> !s.isBlank()).toList();
+        List<String> searchTerms = Arrays.stream(mainFilter.searchTerms.split(",")).filter(s -> !s.isBlank()).toList();
         if (!searchTerms.isEmpty()) {
             filtered = filtered.stream().filter(job -> {
                 var desc = job.description.toLowerCase();
@@ -110,7 +110,7 @@ public class WebController {
         }
 
         // filter title
-        List<String> titleSearchTerms = Arrays.stream(filter.titleSearch.split(",")).filter(s -> !s.isBlank()).toList();
+        List<String> titleSearchTerms = Arrays.stream(mainFilter.titleSearch.split(",")).filter(s -> !s.isBlank()).toList();
         if (!titleSearchTerms.isEmpty()) {
             filtered = filtered.stream().filter(job -> {
                 for (String term : titleSearchTerms) {
@@ -123,7 +123,7 @@ public class WebController {
 
 
         // highlight search term
-        highlight(searchTerms, filtered);
+        highlight(searchTerms, filtered, "highlight");
 
         // sort
         filtered = filtered.stream()
@@ -155,7 +155,7 @@ public class WebController {
         }
     }
 
-    private void highlight(List<String> searchTerms, List<Job> filtered) {
+    private void highlight(List<String> searchTerms, List<Job> filtered, String className) {
         if (searchTerms.isEmpty())
             return;
         if (filtered.isEmpty())
@@ -163,7 +163,7 @@ public class WebController {
 
         for (String searchTerm : searchTerms) {
             String pattern = "(?i)" + Pattern.quote(searchTerm.trim());
-            String st = "<span class=\"highlight\">" + searchTerm + "</span>";
+            String st = "<span class=\"" + className + "\">" + searchTerm + "</span>";
             // for each search term
             for (Job job : filtered) {
                 job.description = job.description.replaceAll(pattern, st);
