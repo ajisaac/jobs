@@ -44,6 +44,12 @@ public class WebController {
         return "jobs";
     }
 
+    @GetMapping("/all")
+    @
+    public ResponseEntity<List<Job>> getAllJobs(){
+
+    }
+
     @PostMapping("/")
     public String allFiltered(MainFilter filter) {
         this.filter = filter;
