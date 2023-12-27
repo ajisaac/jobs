@@ -4,23 +4,6 @@
     <title>Titles</title>
     <link rel="stylesheet" href="/styles.css">
     <style>
-        #content {
-            font-size: 1em;
-        }
-
-        .status-updater {
-            margin-top: 2px;
-            margin-bottom: 2px;
-        }
-
-        .jobs-found {
-            margin-top: 0em;
-            margin-bottom: 0em;
-        }
-
-        .job-title {
-            font-weight: normal;
-        }
     </style>
 </head>
 
@@ -49,7 +32,6 @@
     <div class="jobs-found">
         Jobs Found: <span id="counter" th:text="${jobs.size()}"></span>
     </div>
-    <br/>
 
     <div th:each="job:${jobs}">
         <div th:id="${'job-' + job.id}">
