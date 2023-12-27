@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Transient;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,4 +31,8 @@ public class Job {
 
     @Column(name = "search_term")
     String searchTerm;
+
+    String location;
+    String job_site;
+    LocalDateTime job_posting_date;
 }

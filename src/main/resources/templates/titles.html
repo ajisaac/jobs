@@ -25,68 +25,74 @@
 </head>
 
 <body>
-<div id="content">
-    <ul style="display:inline;">
-        <li><a th:href="@{/}">home</a></li>
-        <li><a th:href="@{/titles}">titles</a></li>
-    </ul>
-    <div>
-        <form action="#" th:action="@{/titles}" th:object="${filter}" method="post">
-            <fieldset>
-                <legend>Filters</legend>
+<div class="container">
+    <nav>
+        <a th:href="@{/}">home</a> -
+        <a th:href="@{/titles}">titles</a>
+        <hr>
+    </nav>
+    <div class="filter">
+        <fieldset>
+            <legend>Filters</legend>
+            <form action="#" th:action="@{/titles}" th:object="${filter}" method="post">
                 <div>
-                    <div class="input">
+                    <div class="filter__form-input">
                         <label for="titleSearch">Title Search</label>
                         <input type="text" name="titleSearch" id="titleSearch" th:value="*{titleSearch}"/>
                     </div>
                     <input type="submit" value="Search">
                 </div>
-            </fieldset>
-        </form>
+            </form>
+        </fieldset>
     </div>
-    <br>
-    <div class="jobs-found" th:text="${'Jobs Found: ' + jobs.size()}"></div>
-    <br>
+
+    <div class="jobs-found">
+        Jobs Found: <span id="counter" th:text="${jobs.size()}"></span>
+    </div>
+    <br/>
+
     <div th:each="job:${jobs}">
-        <div class="job-title-listing">
-            <div class="status-updater">
-                <div th:if="${job.status != 'declined'}" class="status-link" th:data-id="${job.id}"
-                     th:data-status="declined"> declined
-                </div>
-                <div th:if="${job.status != 'interested'}" class="status-link" th:data-id="${job.id}"
-                     th:data-status="interested"> interested
-                </div>
-                <a class="job-title" th:href="${job.url}" th:text="${job.title}" target="_blank"></a>
-                <span th:text="${job.getSubtitle()}"></span>
+        <div th:id="${'job-' + job.id}">
+
+            <div class="title__link-action">
+                <button class="button-link" type="submit" name="declined" value="declined" th:data-id="${job.id}"
+                        data-status="declined" onclick="removeTitle(event)">declined
+                </button>
             </div>
+            <div class="title__link-action">
+                <button class="button-link" type="submit" name="interested" value="interested" th:data-id="${job.id}"
+                        data-status="interested" onclick="removeTitle(event)">interested
+                </button>
+            </div>
+
+            <a th:href="${job.url}" th:text="${job.title}" target="_blank"></a>
+            <span th:text="${job.getSubtitle()}"></span>
         </div>
     </div>
 </div>
 </body>
 <script>
-    function decreaseJobsFound(jobsFoundText) {
-        let string = jobsFoundText.substring(11);
-        return "Jobs Found: " + (parseInt(string) - 1)
+
+    function decreaseCounter() {
+        let counter = document.getElementById('counter')
+        let count = counter.innerHTML
+        count = parseInt(count)
+        count = count - 1
+        counter.innerHTML = count
     }
 
-    let links = document.getElementsByClassName("status-link")
-    for (let i in links) {
-        let link = links[i]
-        let id = link?.dataset?.id
-        let status = link?.dataset?.status
+    function removeTitle(e) {
+        e.preventDefault()
+        let status = e.target.dataset.status
+        let id = parseInt(e.target.dataset.id)
 
-        if (id === undefined || status === undefined)
-            continue
-
-        link.addEventListener("click", () => {
-            fetch("/status/" + id + "/" + status, {method: "POST"})
-                .then(response => {
-                    if (response.status === 200) {
-                        link.closest(".job-title-listing").remove()
-                        let jobsFoundDiv = document.getElementsByClassName("jobs-found").item(0)
-                        jobsFoundDiv.innerText = decreaseJobsFound(jobsFoundDiv.innerText)
-                    }
-                })
+        fetch('/status/' + id + '/' + status, {
+            method: 'POST'
+        }).then((response) => {
+            if (response.ok) {
+                decreaseCounter()
+                document.querySelector('#job-' + id).remove()
+            }
         })
     }
 </script>
