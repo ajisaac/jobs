@@ -34,3 +34,4 @@ build/
 
 ### MISC ###
 src/main/resources/templates/notes.html
+src/main/resources/templates/sites.html
