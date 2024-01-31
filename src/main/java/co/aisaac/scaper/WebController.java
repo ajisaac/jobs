@@ -24,7 +24,7 @@ public class WebController {
 
 	private final JobRepo jobRepo;
 
-	private MainFilter filter;
+	private final MainFilter filter;
 
 	public WebController(JobRepo jobRepo) {
 		this.jobRepo = jobRepo;
@@ -79,8 +79,7 @@ public class WebController {
 	public ResponseEntity<String> updateStatus(@PathVariable String id, @PathVariable String status) {
 		Long idd = Long.parseLong(id);
 		Optional<Job> optJob = jobRepo.findById(idd);
-		if (optJob.isEmpty())
-			return ResponseEntity.notFound().build();
+		if (optJob.isEmpty()) return ResponseEntity.notFound().build();
 
 		Job job = optJob.get();
 		job.setStatus(status);
@@ -107,19 +106,15 @@ public class WebController {
 			}).toList();
 		}
 
-
 		// filter search term
 		List<String> searchTerms = Arrays.stream(mainFilter.searchTerms.split(",")).filter(s -> !s.isBlank()).toList();
 		if (!searchTerms.isEmpty()) {
 			filtered = filtered.stream().filter(job -> {
 				var desc = job.description.toLowerCase();
 				for (String term : searchTerms) {
-					if (desc.contains(term.trim().toLowerCase()))
-						return true;
-					if (job.title.toLowerCase(Locale.ROOT).contains(term.trim().toLowerCase()))
-						return true;
-					if (job.subtitle.toLowerCase(Locale.ROOT).contains(term.trim().toLowerCase()))
-						return true;
+					if (desc.contains(term.trim().toLowerCase())) return true;
+					if (job.title.toLowerCase(Locale.ROOT).contains(term.trim().toLowerCase())) return true;
+					if (job.subtitle.toLowerCase(Locale.ROOT).contains(term.trim().toLowerCase())) return true;
 				}
 				return false;
 			}).toList();
@@ -130,8 +125,7 @@ public class WebController {
 		if (!titleSearchTerms.isEmpty()) {
 			filtered = filtered.stream().filter(job -> {
 				for (String term : titleSearchTerms) {
-					if (job.title.toLowerCase(Locale.ROOT).contains(term.trim().toLowerCase()))
-						return true;
+					if (job.title.toLowerCase(Locale.ROOT).contains(term.trim().toLowerCase())) return true;
 				}
 				return false;
 			}).toList();
@@ -142,9 +136,7 @@ public class WebController {
 		highlight(searchTerms, filtered, "highlight");
 
 		// sort
-		filtered = filtered.stream()
-				.sorted((o1, o2) -> o1.company.compareToIgnoreCase(o2.company))
-				.toList();
+		filtered = filtered.stream().sorted((o1, o2) -> o1.company.compareToIgnoreCase(o2.company)).toList();
 
 		return filtered;
 	}
@@ -172,10 +164,8 @@ public class WebController {
 	}
 
 	private void highlight(List<String> searchTerms, List<Job> filtered, String className) {
-		if (searchTerms.isEmpty())
-			return;
-		if (filtered.isEmpty())
-			return;
+		if (searchTerms.isEmpty()) return;
+		if (filtered.isEmpty()) return;
 
 		for (String searchTerm : searchTerms) {
 			String pattern = "(?i)" + Pattern.quote(searchTerm.trim());
