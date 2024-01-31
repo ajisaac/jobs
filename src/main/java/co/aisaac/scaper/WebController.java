@@ -94,6 +94,12 @@ public class WebController {
 		List<Job> filtered = new ArrayList<>(all);
 		filtered = filtered.stream().filter(job -> job.status.trim().equalsIgnoreCase(status.trim())).toList();
 
+		// filter job site
+		String jobSite = mainFilter.getJobSite();
+		if (!jobSite.equals("ALL")) {
+			filtered = filtered.stream().filter(job -> job.job_site.trim().equalsIgnoreCase(jobSite.trim())).toList();
+		}
+
 		// filter company
 		List<String> companies = Arrays.stream(mainFilter.companySearch.split(",")).filter(s -> !s.isBlank()).toList();
 		if (!companies.isEmpty()) {
