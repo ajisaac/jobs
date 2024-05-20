@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>scrapers</artifactId>
     <name>scrapers</name>
     <description>scrapers</description>
-    <groupId>co.aisaac</groupId>
+    <artifactId>scrapers</artifactId>
     <version>0.0.1</version>
+
     <packaging>jar</packaging>
 
     <parent>
@@ -16,14 +16,6 @@
         <artifactId>parent</artifactId>
         <version>0.0.1</version>
     </parent>
-
-
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <java.version>21</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <dependencies>
         <dependency>
