@@ -1,4 +1,4 @@
-package co.aisaac.scaper;
+package co.aisaac.webapp;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

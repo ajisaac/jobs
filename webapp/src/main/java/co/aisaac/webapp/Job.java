@@ -1,4 +1,4 @@
-package co.aisaac.scaper;
+package co.aisaac.webapp;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,19 +20,19 @@ public class Job {
     @Id
     private Long id;
 
-    String title;
-    String url;
-    String company;
+    public String title;
+    public String url;
+    public String company;
     @Transient
-    List<String> companyStatuses = new ArrayList<>();
-    String subtitle;
-    String description;
-    String status;
+    public List<String> companyStatuses = new ArrayList<>();
+    public String subtitle;
+    public String description;
+    public String status;
 
     @Column(name = "search_term")
-    String searchTerm;
+    public String searchTerm;
 
-    String location;
-    String job_site;
-    LocalDateTime job_posting_date;
+    public String location;
+    public String job_site;
+    public LocalDateTime job_posting_date;
 }
