@@ -1,4 +1,4 @@
-package co.aisaac.scaper;
+package co.aisaac.webapp;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

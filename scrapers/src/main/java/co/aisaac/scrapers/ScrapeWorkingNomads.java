@@ -1,4 +1,4 @@
-package co.aisaac.scaper.scrapers;
+package co.aisaac.scrapers;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,7 +26,7 @@ public class ScrapeWorkingNomads {
             String company = jobElement.findElement(By.cssSelector("div.job-company")).getText();
             String description = jobElement.getAttribute("innerHTML");
 
-            db.storeJob(title, company, href, "", description, "Working Nomads", "new", "", "working_nomads", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),"");
+//            db.storeJob(title, company, href, "", description, "Working Nomads", "new", "", "working_nomads", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),"");
         } catch (Exception e) {
             System.out.println(e);
         }

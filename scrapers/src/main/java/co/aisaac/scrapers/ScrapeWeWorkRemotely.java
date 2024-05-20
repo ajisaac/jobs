@@ -1,4 +1,4 @@
-package co.aisaac.scaper.scrapers;
+package co.aisaac.scrapers;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import co.aisaac.webapp.Job;
 
 public class ScrapeWeWorkRemotely {
 
@@ -39,11 +41,11 @@ public class ScrapeWeWorkRemotely {
 		WebElement descriptionElement = driver.findElement(By.cssSelector("div.listing-container"));
 		job.description = descriptionElement != null ? descriptionElement.getAttribute("innerHTML") : "No Description Found";
 
-		job.jobSite = "we_work_remotely";
+		job.job_site = "we_work_remotely";
 		job.status = "new";
-		job.href = href;
-		job.jobPostingDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		job.htmlPath = "";
+		job.url = href;
+		job.job_posting_date = LocalDateTime.now();
+//		job.htmlPath = "";
 
 		db.storeJob(job);
 	}

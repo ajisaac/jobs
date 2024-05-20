@@ -1,4 +1,4 @@
-package co.aisaac.scaper.scrapers;
+package co.aisaac.scrapers;
 
 import java.util.Random;
 
