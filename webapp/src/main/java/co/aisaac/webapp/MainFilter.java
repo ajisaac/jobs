@@ -1,4 +1,4 @@
-package co.aisaac.scaper;
+package co.aisaac.webapp;
 
 import lombok.Getter;
 import lombok.Setter;
