@@ -30,16 +30,16 @@ public class WebController {
 		this.jobRepo = jobRepo;
 		this.filter = new MainFilter();
 	}
-
-	@GetMapping("/sites")
-	public String sites() {
-		return "sites";
-	}
-
-	@GetMapping("/notes")
-	public String notes() {
-		return "notes";
-	}
+//
+//	@GetMapping("/sites")
+//	public String sites() {
+//		return "sites";
+//	}
+//
+//	@GetMapping("/notes")
+//	public String notes() {
+//		return "notes";
+//	}
 
 	@GetMapping("/")
 	public String all(Model model) {
@@ -55,13 +55,14 @@ public class WebController {
 	}
 
 	@GetMapping("/filter/status/{status}")
-	public String filterStatus(@PathVariable String status) {
+	public String filterStatus(@PathVariable("status") String status) {
 		filter.setStatus(status);
 		return "redirect:/";
 	}
 
-	@GetMapping("/filter/job-site/{site}")
-	public String filterJobSite(@PathVariable String site) {
+	@GetMapping("/filter/job-site/{job-site}")
+	public String filterJobSite(@PathVariable("job-site") String site) {
+
 		filter.setJobSite(site);
 		return "redirect:/";
 	}
@@ -76,7 +77,7 @@ public class WebController {
 
 	@ResponseBody
 	@PostMapping("/status/{id}/{status}")
-	public ResponseEntity<String> updateStatus(@PathVariable String id, @PathVariable String status) {
+	public ResponseEntity<String> updateStatus(@PathVariable("id") String id, @PathVariable("status") String status) {
 		Long idd = Long.parseLong(id);
 		Optional<Job> optJob = jobRepo.findById(idd);
 		if (optJob.isEmpty()) return ResponseEntity.notFound().build();
