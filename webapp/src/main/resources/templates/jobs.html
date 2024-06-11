@@ -149,7 +149,14 @@
             continue
 
         link.addEventListener("click", () => {
-            fetch("/status/" + id + "/" + status, {method: "POST"})
+            fetch("/status/" + id + "/" + status,
+                {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-Token": "[[${_csrf.token}]]"
+                    }
+                }
+            )
                 .then(response => {
                     if (response.status === 200) {
                         link.closest(".job").remove()
