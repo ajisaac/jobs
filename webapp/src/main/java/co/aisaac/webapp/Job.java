@@ -3,6 +3,7 @@ package co.aisaac.webapp;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity(name = "jobs")
+@Table(name="jobs", schema = "job_scraper")
 public class Job {
 
     @Id
