@@ -156,14 +156,13 @@
                         "X-CSRF-Token": "[[${_csrf.token}]]"
                     }
                 }
-            )
-                .then(response => {
-                    if (response.status === 200) {
-                        link.closest(".job").remove()
-                        let jobsFoundDiv = document.getElementsByClassName("jobs-found").item(0)
-                        jobsFoundDiv.innerText = decreaseJobsFound(jobsFoundDiv.innerText)
-                    }
-                })
+            ).then(response => {
+                if (response.status === 200) {
+                    link.closest(".job").remove()
+                    let jobsFoundDiv = document.getElementsByClassName("jobs-found").item(0)
+                    jobsFoundDiv.innerText = decreaseJobsFound(jobsFoundDiv.innerText)
+                }
+            })
         })
     }
 </script>
