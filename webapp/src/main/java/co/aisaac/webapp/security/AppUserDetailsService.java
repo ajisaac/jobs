@@ -1,5 +1,7 @@
 package co.aisaac.webapp.security;
 
+import co.aisaac.webapp.User;
+import co.aisaac.webapp.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
