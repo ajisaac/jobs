@@ -1,4 +1,4 @@
-package co.aisaac.webapp;
+package co.aisaac.webapp.security;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

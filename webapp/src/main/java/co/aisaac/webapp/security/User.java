@@ -1,4 +1,4 @@
-package co.aisaac.webapp;
+package co.aisaac.webapp.security;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
