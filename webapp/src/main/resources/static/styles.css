@@ -1,13 +1,76 @@
 * {
     --bs-border-color: #9f9f9f;
+    --bs-link-color-rgb: 0, 0, 238
 }
 
-.job__description{
+hr {
+    border-bottom-width: 1px;
+    border-bottom-style: inset;
+    border-left-style: inset;
+    border-left-width: 1px;
+    border-right-style: inset;
+    border-right-width: 1px;
+    border-top-style: inset;
+    border-top-width: 1px;
+    box-sizing: border-box;
+    color: rgb(33, 37, 41);
+    display: block;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-weight: 400;
+    height: 2px;
+    line-height: 24px;
+    margin-block-end: 8px;
+    margin-block-start: 8px;
+    margin-inline-end: 0px;
+    margin-inline-start: 0px;
+    opacity: 1;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-align: start;
+    text-size-adjust: 100%;
+    unicode-bidi: isolate;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+legend {
+    display: block !important;
+    padding-inline-start: 2px !important;
+    padding-inline-end: 2px !important;
+    unicode-bidi: isolate !important;
+    border-width: initial !important;
+    border-style: none !important;
+    border-color: initial !important;
+    border-image: initial !important;
+
+    float: unset !important;
+    width: unset !important;;
+    padding: unset !important;
+    margin-bottom: unset !important;
+    font-size: unset !important;
+    line-height: unset !important;
+}
+
+fieldset {
+    display: block !important;
+    margin-inline-start: 2px !important;
+    margin-inline-end: 2px !important;
+    padding-block-start: 0.35em !important;
+    padding-inline-start: 0.75em !important;
+    padding-inline-end: 0.75em !important;
+    padding-block-end: 0.625em !important;
+    min-inline-size: min-content !important;
+    border: 2px groove rgb(192, 192, 192) !important;
+    border-image: initial !important;
+}
+
+.job__description {
     font-family: serif !important;
     font-size: 16px;
     line-height: 1.3rem;
     color: black;
 }
+
 .container-fixed {
     max-width: 900px;
     margin: auto;
