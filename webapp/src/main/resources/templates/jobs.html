@@ -5,89 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobs</title>
     <link rel="stylesheet" href="/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
 <body>
-<div class="container" style="max-width: 960px">
-    <div class="pt-2 pb-0 mb-4">
-        <nav>
-            <a th:href="@{/}">home</a> -
-            <a th:href="@{/titles}">titles</a> -
-            <a th:href="@{/notes}">notes</a> -
-            <a th:href="@{/sites}">sites</a>
-        </nav>
+<div class="container">
+    <nav>
+        <a th:href="@{/}">home</a> -
+        <a th:href="@{/titles}">titles</a> -
+        <a th:href="@{/notes}">notes</a> -
+        <a th:href="@{/sites}">sites</a>
         <hr>
+    </nav>
+
+    <div class="filter">
+        <fieldset>
+            <legend>Filters</legend>
+            <div>
+                <div class="filter__link-list">
+
+                    <a th:href="@{/filter/status/new}">new</a> -
+                    <a th:href="@{/filter/status/declined}">declined</a> -
+                    <a th:href="@{/filter/status/interested}">interested</a> -
+                    <a th:href="@{/filter/status/later}">later</a> -
+                    <a th:href="@{/filter/status/applied}">applied</a> -
+                    <a th:href="@{/filter/status/interviewing}">interviewing</a> -
+                    <a th:href="@{/filter/status/rejected}">rejected</a>
+                </div>
+
+
+                <div class="filter__form-sections">
+                    <div class="filter__form-section">
+                        <form action="#" th:action="@{/}" th:object="${mainFilter}" method="post">
+                            <div class="filter__form-input">
+                                <label for="companySearch">Companies</label>
+                                <input type="text" name="companySearch" id="companySearch" th:value="*{companySearch}"/>
+                            </div>
+                            <div class="filter__form-input">
+                                <label for="searchTerms">Search Terms</label>
+                                <input type="text" name="searchTerms" id="searchTerms" th:value="*{searchTerms}"/>
+                            </div>
+                            <div class="filter__form-input">
+                                <label for="titleSearch">Title Search</label>
+                                <input type="text" name="titleSearch" id="titleSearch" th:value="*{titleSearch}"/>
+                            </div>
+                            <input type="submit" value="Search">
+                        </form>
+                    </div>
+
+                    <div class="filter__form-section">
+                        <div class="filter__job-site-selector">
+                            <a th:href="@{'/filter/job-site/all'}">All</a> -
+                            <a th:href="@{'/filter/job-site/indeed'}">Indeed</a> -
+                            <a th:href="@{'/filter/job-site/skip_the_drive'}">Skip The Drive</a> -
+                            <a th:href="@{'/filter/job-site/working_nomads'}">Working Nomads</a> -
+                            <a th:href="@{'/filter/job-site/wellfound'}">Wellfound</a><br>
+                            <a th:href="@{'/filter/job-site/remote_co'}">Remote.co</a> -
+                            <a th:href="@{'/filter/job-site/remotive'}">Remotive</a> -
+                            <a th:href="@{'/filter/job-site/remote_ok'}">RemoteOk</a> -
+                            <a th:href="@{'/filter/job-site/we_work_remotely'}">We Work Remotely</a><br>
+                            <a th:href="@{'/filter/job-site/flexjobs'}">FlexJobs</a> -
+                            <a th:href="@{'/filter/job-site/startup_jobs'}">Startup.jobs</a> -
+                            <a th:href="@{'/filter/job-site/built_in_sea'}">Built in Seattle</a> -
+                            <a th:href="@{'/filter/job-site/hacker_news'}">Hacker News</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
     </div>
 
-    <div class="mb-2">
-        <span class="jobs-found" th:text="${jobs.size()}"></span>
-        <span style="font-weight: bold" th:text="${' ' + mainFilter.getStatus() }"></span>
-        <span th:text="${' jobs found from '}"></span>
-        <span style="font-weight: bold" th:text="${mainFilter.getJobSite()}"></span>
 
+    <div class="jobs-found"
+         th:text="${jobs.size() + ' ' + mainFilter.getStatus() + ' jobs found from ' + mainFilter.getJobSite()}">
     </div>
-
-    <fieldset class="mb-4">
-        <div>
-            <div class="mb-3">
-                <a th:href="@{/filter/status/new}">new</a> -
-                <a th:href="@{/filter/status/declined}">declined</a> -
-                <a th:href="@{/filter/status/interested}">interested</a> -
-                <a th:href="@{/filter/status/later}">later</a> -
-                <a th:href="@{/filter/status/applied}">applied</a> -
-                <a th:href="@{/filter/status/interviewing}">interviewing</a> -
-                <a th:href="@{/filter/status/rejected}">rejected</a>
-            </div>
-
-            <div class="mb-3">
-                <a th:href="@{'/filter/job-site/all'}">All</a> -
-                <a th:href="@{'/filter/job-site/indeed'}">Indeed</a> -
-                <a th:href="@{'/filter/job-site/skip_the_drive'}">Skip The Drive</a> -
-                <a th:href="@{'/filter/job-site/working_nomads'}">Working Nomads</a> -
-                <a th:href="@{'/filter/job-site/wellfound'}">Wellfound</a> -
-                <a th:href="@{'/filter/job-site/remote_co'}">Remote.co</a> -
-                <a th:href="@{'/filter/job-site/remotive'}">Remotive</a> -
-                <a th:href="@{'/filter/job-site/remote_ok'}">RemoteOk</a> -
-                <a th:href="@{'/filter/job-site/we_work_remotely'}">We Work Remotely</a> -
-                <a th:href="@{'/filter/job-site/flexjobs'}">FlexJobs</a> -
-                <a th:href="@{'/filter/job-site/startup_jobs'}">Startup.jobs</a> -
-                <a th:href="@{'/filter/job-site/built_in_sea'}">Built in Seattle</a> -
-                <a th:href="@{'/filter/job-site/hacker_news'}">Hacker News</a>
-            </div>
-
-            <div class="mb-3 col-md-4">
-                <form action="#" th:action="@{/}" th:object="${mainFilter}" method="post">
-                    <div class="input-group mb-1">
-                        <label class="me-2" for="companySearch">Companies</label>
-                        <input type="text" name="companySearch" id="companySearch"
-                               class="form-control form-control-sm" th:value="*{companySearch}"/>
-                    </div>
-                    <div class="input-group mb-1">
-                        <label class="me-2" for="searchTerms">Search Terms</label>
-                        <input type="text" name="searchTerms" id="searchTerms"
-                               class="form-control form-control-sm" th:value="*{searchTerms}"/>
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="me-2" for="titleSearch">Title Search</label>
-                        <input type="text" name="titleSearch" id="titleSearch"
-                               class="form-control form-control-sm" th:value="*{titleSearch}"/>
-                    </div>
-                    <input type="submit" value="Search">
-                </form>
-            </div>
-        </div>
-        <hr>
-    </fieldset>
 
 
     <div th:each="job:${jobs}">
-        <div class="job" style="margin-bottom: 4rem">
-            <div class="job__title mb-1">
-                <a class="job-title text-uppercase fw-bold" th:href="${job.url}" th:text="${job.title}"
-                   target="_blank"></a>
-                <span th:class="${'badge job\_\_status job\_\_status-' + job.status}" th:text="${job.status}"></span>
+        <div class="job">
+            <div class="job__title">
+                <a class="job-title" th:href="${job.url}" th:text="${job.title}" target="_blank"></a>
+                <span th:class="${'job\_\_status job\_\_status-' + job.status}" th:text="${job.status}"></span>
             </div>
 
             <div class="job__company">
@@ -95,7 +92,7 @@
 
                 <div style="display: inline" th:each="status:${job.companyStatuses}">
 
-                <span th:class="${'badge job\_\_company-status job\_\_status-' + status}"
+                <span th:class="${'job\_\_company-status job\_\_status-' + status}"
                       th:text="${status}"></span> -
 
                 </div>
@@ -103,45 +100,43 @@
                 <span th:text="${job.subtitle}"/>
             </div>
 
-            <div class="mb-5">
             <span class="job__actions">
-                <span th:if="${job.status != 'new'}" class="btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'new'}" class="job__link-action button-link" th:data-id="${job.id}"
                       th:data-status="new"> new
                 </span>
-                <span th:if="${job.status != 'declined'}" class="btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'declined'}" class="job__link-action button-link" th:data-id="${job.id}"
                       th:data-status="declined"> declined
                 </span>
-                <span th:if="${job.status != 'interested'}" class="btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'interested'}" class="job__link-action button-link" th:data-id="${job.id}"
                       th:data-status="interested">interested
                 </span>
-                <span th:if="${job.status != 'later'}" class="btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'later'}" class="job__link-action button-link" th:data-id="${job.id}"
                       th:data-status="later">later
                 </span>
-                <span th:if="${job.status != 'applied'}" class="btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'applied'}" class="job__link-action button-link" th:data-id="${job.id}"
                       th:data-status="applied"> applied
                 </span>
-                <span th:if="${job.status != 'interviewing'}" class="btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'interviewing'}" class="job__link-action button-link"
+                      th:data-id="${job.id}"
                       th:data-status="interviewing">interviewing
                 </span>
-                <span th:if="${job.status != 'rejected'}" class="btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'rejected'}" class="job__link-action button-link" th:data-id="${job.id}"
                       th:data-status="rejected"> rejected
                 </span>
             </span>
-            </div>
 
             <div class="job__description" th:utext="${job.description}"></div>
             <hr>
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-
 </body>
 <script>
     function decreaseJobsFound(jobsFoundText) {
-        return (parseInt(jobsFoundText) - 1)
+        // find first non number character
+        let firstBlank = jobsFoundText.indexOf(" ")
+        let string = jobsFoundText.substring(0, firstBlank)
+        return (parseInt(string) - 1) + jobsFoundText.substring(firstBlank)
     }
 
     let links = document.getElementsByClassName("job__link-action")

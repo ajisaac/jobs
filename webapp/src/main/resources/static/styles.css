@@ -1,59 +1,155 @@
-* {
-    --bs-border-color: #9f9f9f;
-}
-
-.job__description{
-    font-family: serif !important;
-    font-size: 16px;
-    line-height: 1.3rem;
-    color: black;
-}
-.container-fixed {
+.container {
     max-width: 900px;
     margin: auto;
 }
 
+/* MAIN PAGE FILTER */
+
+.jobs-found {
+    margin-bottom: 25px;
+}
+
+.filter {
+    margin-bottom: 5px;
+}
+
+.filter__link-list {
+    margin: 0 0 10px;
+}
+
+.filter__form-sections {
+    display: flex;
+    justify-content: flex-start;
+    column-gap: 100px;
+}
+
+.filter__form-input {
+    margin-bottom: 5px;
+}
+
+.button-link {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    font-size: unset;
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.job {
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+.job__title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.job__status {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: yellow;
+    background-color: blue;
+    border-radius: 5px;
+    padding: 2px 6px;
+    display: inline;
+    margin-left: 5px;
+}
+
+.job__company {
+    font-weight: bolder;
+    margin-bottom: 15px;
+}
+
 .job__status-new {
-    color: yellow !important;
-    background-color: green !important;
+    color: yellow;
+    background-color: green;
 }
 
 .job__status-declined {
-    color: yellow !important;
-    background-color: orange !important;
+    color: yellow;
+    background-color: orange;
 }
 
 .job__status-interested {
-    color: #d1baff !important;
-    background-color: #5914ec !important;
+    color: #d1baff;
+    background-color: #5914ec;
 }
 
 .job__status-later {
-    color: #98eeec !important;
-    background-color: grey !important;
+    color: #98eeec;
+    background-color: grey;
 }
 
 .job__status-applied {
-    color: yellow !important;
-    background-color: blue !important;
+    color: yellow;
+    background-color: blue;
 }
 
 .job__status-interviewing {
-    color: yellow !important;
-    background-color: magenta !important;
+    color: yellow;
+    background-color: magenta;
 }
 
 .job__status-rejected {
-    color: yellow !important;
-    background-color: red !important;
+    color: yellow;
+    background-color: red;
+}
+
+.job__company-status {
+    font-weight: bold;
+    font-size: .9rem;
+    border-radius: 5px;
+    padding: 1px 3px;
+    display: inline;
+    margin-left: 2px;
+}
+
+.job__description {
+    margin-top: 40px;
+}
+
+.job__link-action {
+    display: inline-block;
+    margin: 2px 2px;
+}
+
+.title__link-action {
+    display: inline-block;
+    margin: 0px 5px;
+}
+
+.status-updater {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.input {
+    margin-bottom: 10px;
 }
 
 .highlight {
-    background-color: aqua !important;
+    background-color: aqua;
 }
 
 .company-status {
     font-weight: bolder;
+    font-size: 1.2rem;
     color: royalblue;
     background-color: lavender;
+    margin: 10px 10px;
+}
+
+a {
+    color: rgb(0, 0, 238);
+    font-family: arial, sans-serif;
 }
