@@ -10,8 +10,8 @@
 </head>
 
 <body>
-<div class="container p-0 pt-1" style="max-width: 900px">
-    <div class="">
+<div class="container" style="max-width: 960px">
+    <div class="pt-2 pb-0 mb-4">
         <nav>
             <a th:href="@{/}">home</a> -
             <a th:href="@{/titles}">titles</a> -
@@ -21,8 +21,15 @@
         <hr>
     </div>
 
+    <div class="mb-2">
+        <span class="jobs-found" th:text="${jobs.size()}"></span>
+        <span style="font-weight: bold" th:text="${' ' + mainFilter.getStatus() }"></span>
+        <span th:text="${' jobs found from '}"></span>
+        <span style="font-weight: bold" th:text="${mainFilter.getJobSite()}"></span>
 
-    <fieldset class="mb-2">
+    </div>
+
+    <fieldset>
         <legend>Filters</legend>
         <div>
             <div class="mb-3">
@@ -34,66 +41,56 @@
                 <a th:href="@{/filter/status/interviewing}">interviewing</a> -
                 <a th:href="@{/filter/status/rejected}">rejected</a>
             </div>
-            <div class="row">
 
-                <div class="col-md-4 me-5">
-                    <form action="#" th:action="@{/}" th:object="${mainFilter}" method="post">
-                        <div class="input-group mb-1">
-                            <label class="me-2" for="companySearch">Companies</label>
-                            <input type="text" name="companySearch" id="companySearch"
-                                   class="form-control form-control-sm" th:value="*{companySearch}"/>
-                        </div>
-                        <div class="input-group mb-1">
-                            <label class="me-2" for="searchTerms">Search Terms</label>
-                            <input type="text" name="searchTerms" id="searchTerms"
-                                   class="form-control form-control-sm" th:value="*{searchTerms}"/>
-                        </div>
-                        <div class="input-group mb-1">
-                            <label class="me-2" for="titleSearch">Title Search</label>
-                            <input type="text" name="titleSearch" id="titleSearch"
-                                   class="form-control form-control-sm" th:value="*{titleSearch}"/>
-                        </div>
-                        <input type="submit" value="Search">
-                    </form>
-                </div>
-
-                <div class="mb-3 col-md-7">
-                    <a th:href="@{'/filter/job-site/all'}">All</a> -
-                    <a th:href="@{'/filter/job-site/indeed'}">Indeed</a> -
-                    <a th:href="@{'/filter/job-site/skip_the_drive'}">Skip The Drive</a> -
-                    <a th:href="@{'/filter/job-site/working_nomads'}">Working Nomads</a> -
-                    <a th:href="@{'/filter/job-site/wellfound'}">Wellfound</a> -
-                    <a th:href="@{'/filter/job-site/remote_co'}">Remote.co</a> -
-                    <a th:href="@{'/filter/job-site/remotive'}">Remotive</a> -
-                    <a th:href="@{'/filter/job-site/remote_ok'}">RemoteOk</a> -
-                    <a th:href="@{'/filter/job-site/we_work_remotely'}">We Work Remotely</a> -
-                    <a th:href="@{'/filter/job-site/flexjobs'}">FlexJobs</a> -
-                    <a th:href="@{'/filter/job-site/startup_jobs'}">Startup.jobs</a> -
-                    <a th:href="@{'/filter/job-site/built_in_sea'}">Built in Seattle</a> -
-                    <a th:href="@{'/filter/job-site/hacker_news'}">Hacker News</a>
-                </div>
-
+            <div class="mb-3">
+                <a th:href="@{'/filter/job-site/all'}">All</a> -
+                <a th:href="@{'/filter/job-site/indeed'}">Indeed</a> -
+                <a th:href="@{'/filter/job-site/skip_the_drive'}">Skip The Drive</a> -
+                <a th:href="@{'/filter/job-site/working_nomads'}">Working Nomads</a> -
+                <a th:href="@{'/filter/job-site/wellfound'}">Wellfound</a> -
+                <a th:href="@{'/filter/job-site/remote_co'}">Remote.co</a> -
+                <a th:href="@{'/filter/job-site/remotive'}">Remotive</a> -
+                <a th:href="@{'/filter/job-site/remote_ok'}">RemoteOk</a> -
+                <a th:href="@{'/filter/job-site/we_work_remotely'}">We Work Remotely</a> -
+                <a th:href="@{'/filter/job-site/flexjobs'}">FlexJobs</a> -
+                <a th:href="@{'/filter/job-site/startup_jobs'}">Startup.jobs</a> -
+                <a th:href="@{'/filter/job-site/built_in_sea'}">Built in Seattle</a> -
+                <a th:href="@{'/filter/job-site/hacker_news'}">Hacker News</a>
             </div>
 
+            <div class="mb-3 col-md-4">
+                <form action="#" th:action="@{/}" th:object="${mainFilter}" method="post">
+                    <div class="input-group mb-1">
+                        <label class="me-2" for="companySearch">Companies</label>
+                        <input type="text" name="companySearch" id="companySearch"
+                               class="form-control form-control-sm" th:value="*{companySearch}"/>
+                    </div>
+                    <div class="input-group mb-1">
+                        <label class="me-2" for="searchTerms">Search Terms</label>
+                        <input type="text" name="searchTerms" id="searchTerms"
+                               class="form-control form-control-sm" th:value="*{searchTerms}"/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="me-2" for="titleSearch">Title Search</label>
+                        <input type="text" name="titleSearch" id="titleSearch"
+                               class="form-control form-control-sm" th:value="*{titleSearch}"/>
+                    </div>
+                    <input type="submit" value="Search">
+                </form>
+            </div>
         </div>
     </fieldset>
-    <div class="mb-4">
-        <span class="jobs-found" th:text="${jobs.size()}"></span>
-        <span style="font-weight: bold" th:text="${' ' + mainFilter.getStatus() }"></span>
-        <span th:text="${' jobs found from '}"></span>
-        <span style="font-weight: bold" th:text="${mainFilter.getJobSite()}"></span>
 
-    </div>
 
     <div th:each="job:${jobs}">
         <div class="job" style="margin-bottom: 4rem">
-            <div class="job-title mb-1">
-                <a class="text-uppercase fw-bold" th:href="${job.url}" th:text="${job.title}"
+            <div class="job__title mb-1">
+                <a class="job-title text-uppercase fw-bold" th:href="${job.url}" th:text="${job.title}"
                    target="_blank"></a>
                 <span th:class="${'badge job\_\_status job\_\_status-' + job.status}" th:text="${job.status}"></span>
             </div>
 
-            <div class="company">
+            <div class="job__company">
                 <span th:text="${job.company}"/> -
 
                 <div style="display: inline" th:each="status:${job.companyStatuses}">
@@ -106,27 +103,27 @@
                 <span th:text="${job.subtitle}"/>
             </div>
 
-            <div class="job-actions mb-5">
+            <div class="mb-5">
             <span class="job__actions">
-                <span th:if="${job.status != 'new'}" class="job__link-action btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'new'}" class="btn btn-link" th:data-id="${job.id}"
                       th:data-status="new"> new
                 </span>
-                <span th:if="${job.status != 'declined'}" class="job__link-action btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'declined'}" class="btn btn-link" th:data-id="${job.id}"
                       th:data-status="declined"> declined
                 </span>
-                <span th:if="${job.status != 'interested'}" class="job__link-action btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'interested'}" class="btn btn-link" th:data-id="${job.id}"
                       th:data-status="interested">interested
                 </span>
-                <span th:if="${job.status != 'later'}" class="job__link-action btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'later'}" class="btn btn-link" th:data-id="${job.id}"
                       th:data-status="later">later
                 </span>
-                <span th:if="${job.status != 'applied'}" class="job__link-action btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'applied'}" class="btn btn-link" th:data-id="${job.id}"
                       th:data-status="applied"> applied
                 </span>
-                <span th:if="${job.status != 'interviewing'}" class="job__link-action btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'interviewing'}" class="btn btn-link" th:data-id="${job.id}"
                       th:data-status="interviewing">interviewing
                 </span>
-                <span th:if="${job.status != 'rejected'}" class="job__link-action btn btn-link" th:data-id="${job.id}"
+                <span th:if="${job.status != 'rejected'}" class="btn btn-link" th:data-id="${job.id}"
                       th:data-status="rejected"> rejected
                 </span>
             </span>
