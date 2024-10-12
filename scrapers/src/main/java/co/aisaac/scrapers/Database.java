@@ -11,10 +11,6 @@ import java.sql.SQLException;
 
 public class Database {
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/jobs";
-    private static final String USER
-            = "postgres";
-    private static final String PASSWORD = "password";
 
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
