@@ -21,12 +21,10 @@ import java.util.List;
 @Getter
 @Setter
 @Entity(name = "jobs")
-@Table(name="jobs", schema = "job_scraper")
 public class Job {
 
     @Id
-    @SequenceGenerator(name = "jobs_id_generator", sequenceName = "jobs_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jobs_id_generator")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 

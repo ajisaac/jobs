@@ -30,16 +30,6 @@ public class WebController {
 		this.jobRepo = jobRepo;
 		this.filter = new MainFilter();
 	}
-//
-//	@GetMapping("/sites")
-//	public String sites() {
-//		return "sites";
-//	}
-//
-//	@GetMapping("/notes")
-//	public String notes() {
-//		return "notes";
-//	}
 
 	@GetMapping("/")
 	public String all(Model model) {
