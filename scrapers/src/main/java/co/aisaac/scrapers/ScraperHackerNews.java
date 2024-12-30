@@ -8,14 +8,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ScraperHackerNews {
@@ -25,7 +21,7 @@ public class ScraperHackerNews {
     private final String url;
 
     public static void main(String[] args) {
-        String url = "https://hnhiring.com/january-2024";
+        String url = "https://hnhiring.com/december-2024";
         new ScraperHackerNews(url).run();
     }
 
@@ -47,7 +43,6 @@ public class ScraperHackerNews {
 
         // save text to data folder
         String md5Hex = hashMD5(url);
-        String htmlPath = savePage(md5Hex);
 
         System.out.println("Scraping main page");
         List<WebElement> jobElements = driver.findElements(By.cssSelector("li.job>.container>.body"));
@@ -61,8 +56,12 @@ public class ScraperHackerNews {
                 job.url = hashMD5(job.title);
                 job.status = "new";
                 job.job_site = "hacker_news";
-//				job.htmlPath = htmlPath;
                 job.job_posting_date = LocalDateTime.now();
+
+                job.company = "";
+                job.searchTerm = "";
+                job.location = "";
+                job.subtitle = "";
 
                 if (!db.hrefExists(md5Hex)) {
                     db.storeJob(job);
@@ -75,18 +74,6 @@ public class ScraperHackerNews {
         }
 
         driver.quit();
-    }
-
-    // Saves page text to file
-    private String savePage(String md5Hex) {
-        String htmlPath = "/Users/aaron/Code/scraper-backend/data/" + md5Hex + ".html";
-        try {
-            Files.write(Paths.get(htmlPath), driver.getPageSource().getBytes());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException("Unable to save page for hackernews.");
-        }
-        return htmlPath;
     }
 
     public static String hashMD5(String input) {
