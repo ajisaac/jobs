@@ -1,0 +1,20 @@
+# Just for local development to have a database
+version: '3.5'
+
+services:
+  Jobs:
+    image: mysql:8.0
+    restart: no
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'mysql'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - /Users/aaron/jobs_db/mysql:/var/lib/mysql
+
+
