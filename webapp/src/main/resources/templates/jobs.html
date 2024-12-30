@@ -11,9 +11,7 @@
 <div class="container">
     <nav>
         <a th:href="@{/}">home</a> -
-        <a th:href="@{/titles}">titles</a> -
-        <a th:href="@{/notes}">notes</a> -
-        <a th:href="@{/sites}">sites</a>
+        <a th:href="@{/titles}">titles</a>
         <hr>
     </nav>
 
@@ -151,10 +149,7 @@
         link.addEventListener("click", () => {
             fetch("/status/" + id + "/" + status,
                 {
-                    method: "POST",
-                    headers: {
-                        "X-CSRF-Token": "[[${_csrf.token}]]"
-                    }
+                    method: "POST"
                 }
             ).then(response => {
                 if (response.status === 200) {
