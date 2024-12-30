@@ -63,6 +63,26 @@ public class Database {
 
         System.out.println("Storing job " + job.searchTerm + " - " + job.title);
 
+        String sql = "INSERT INTO jobs(title, url, company, subtitle, description, status, search_term, location, " +
+                "job_site, job_posting_date) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, job.title);
+            stmt.setString(2, job.url);
+            stmt.setString(3, job.company);
+            stmt.setString(4, job.subtitle);
+            stmt.setString(5, job.description);
+            stmt.setString(6, job.status);
+            stmt.setString(7, job.searchTerm);
+            stmt.setString(8, job.location);
+            stmt.setString(9, job.job_site);
+            stmt.setString(10, job.job_posting_date.toLocalDate().toString());
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         // save job todo
     }
 }
