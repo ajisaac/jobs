@@ -1,5 +1,6 @@
 package co.aisaac.scrapers;
 
+import co.aisaac.webapp.Job;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -7,48 +8,25 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import co.aisaac.webapp.Job;
 
 public class ScrapeWeWorkRemotely {
 
 	WebDriver driver = new ChromeDriver();
 	Database db = new Database();
 
-	public void scrapeJob(String href) {
-		int sleep = (int) (Math.random() * 6) + 1;
-		try {
-			TimeUnit.SECONDS.sleep(sleep);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+    public static void main(String[] args) {
+        var scraper = new ScrapeWeWorkRemotely();
+        scraper.run();
+    }
 
-		driver.get(href);
-
-		Job job = new Job();
-
-		WebElement titleElement = driver.findElement(By.cssSelector("div.listing-header-container h1"));
-		job.title = titleElement != null ? titleElement.getText().trim() : "undefined";
-
-		WebElement companyElement = driver.findElement(By.cssSelector("div.company-card>h2>a"));
-		job.company = companyElement != null ? companyElement.getText().trim() : "unknown";
-
-		WebElement descriptionElement = driver.findElement(By.cssSelector("div.listing-container"));
-		job.description = descriptionElement != null ? descriptionElement.getAttribute("innerHTML") : "No Description Found";
-
-		job.job_site = "we_work_remotely";
-		job.status = "new";
-		job.url = href;
-		job.job_posting_date = LocalDateTime.now();
-//		job.htmlPath = "";
-
-		db.storeJob(job);
-	}
+    public void run() {
+        scrape("https://weworkremotely.com/categories/remote-full-stack-programming-jobs");
+        scrape("https://weworkremotely.com/categories/remote-back-end-programming-jobs");
+        driver.quit();
+    }
 
 	public void scrape(String url) {
 		driver.manage().window().setPosition(new Point(100, 50));
@@ -106,9 +84,29 @@ public class ScrapeWeWorkRemotely {
 		System.out.println("finished");
 	}
 
-	public void run() {
-		scrape("https://weworkremotely.com/categories/remote-full-stack-programming-jobs");
-		scrape("https://weworkremotely.com/categories/remote-back-end-programming-jobs");
-		driver.quit();
-	}
+
+    public void scrapeJob(String href) {
+        Utils.sleepRandom(5);
+
+        driver.get(href);
+
+        Job job = new Job();
+
+        WebElement titleElement = driver.findElement(By.cssSelector("div.listing-header-container h1"));
+        job.title = titleElement != null ? titleElement.getText().trim() : "undefined";
+
+        WebElement companyElement = driver.findElement(By.cssSelector("div.company-card>h2>a"));
+        job.company = companyElement != null ? companyElement.getText().trim() : "unknown";
+
+        WebElement descriptionElement = driver.findElement(By.cssSelector("div.listing-container"));
+        job.description = descriptionElement != null ? descriptionElement.getAttribute("innerHTML") : "No Description Found";
+
+        job.job_site = "we_work_remotely";
+        job.status = "new";
+        job.url = href;
+        job.job_posting_date = LocalDate.now();
+
+        db.storeJob(job);
+    }
+
 }
