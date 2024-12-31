@@ -8,8 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,7 +97,7 @@ public class ScraperRemotive {
         job.job_site = "remotive";
         job.status = "new";
         job.description = description;
-        job.job_posting_date = LocalDateTime.now();
+        job.job_posting_date = LocalDate.now();
 
         db.storeJob(job);
     }

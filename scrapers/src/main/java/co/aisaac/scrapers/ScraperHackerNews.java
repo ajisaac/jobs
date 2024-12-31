@@ -1,17 +1,13 @@
 package co.aisaac.scrapers;
 
 import co.aisaac.webapp.Job;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ScraperHackerNews {
@@ -41,9 +37,6 @@ public class ScraperHackerNews {
 
         driver.findElement(By.cssSelector("a[data-show-all]")).click();
 
-        // save text to data folder
-        String md5Hex = hashMD5(url);
-
         System.out.println("Scraping main page");
         List<WebElement> jobElements = driver.findElements(By.cssSelector("li.job>.container>.body"));
         System.out.println("Found " + jobElements.size() + " jobElements");
@@ -56,16 +49,11 @@ public class ScraperHackerNews {
                 job.url = hashMD5(job.title);
                 job.status = "new";
                 job.job_site = "hacker_news";
-                job.job_posting_date = LocalDateTime.now();
+                job.job_posting_date = LocalDate.now();
 
                 job.company = "";
-                job.searchTerm = "";
-                job.location = "";
-                job.subtitle = "";
 
-                if (!db.hrefExists(md5Hex)) {
-                    db.storeJob(job);
-                }
+                db.storeJob(job);
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());

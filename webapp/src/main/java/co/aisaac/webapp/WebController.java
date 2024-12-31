@@ -111,7 +111,6 @@ public class WebController {
 				for (String term : searchTerms) {
 					if (desc.contains(term.trim().toLowerCase())) return true;
 					if (job.title.toLowerCase(Locale.ROOT).contains(term.trim().toLowerCase())) return true;
-					if (job.subtitle.toLowerCase(Locale.ROOT).contains(term.trim().toLowerCase())) return true;
 				}
 				return false;
 			}).toList();

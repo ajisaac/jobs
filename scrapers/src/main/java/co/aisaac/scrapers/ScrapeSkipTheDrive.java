@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -137,14 +137,6 @@ public class ScrapeSkipTheDrive {
         WebElement compLinkElement = driver.findElement(By.className("custom_fields_company_name_display"));
         job.company = compLinkElement != null ? compLinkElement.getText().trim() : "unknown";
 
-        WebElement dateElement = driver.findElement(By.className("custom_fields_job_date_display"));
-        String date = dateElement != null ? dateElement.getText().trim() : "";
-
-        WebElement locationElement = driver.findElement(By.className("custom_fields_job_location_display"));
-        String location = locationElement != null ? locationElement.getText().trim() : "";
-
-        job.subtitle = date + " " + location;
-
         WebElement jdElement = driver.findElement(By.className("entry-content"));
         job.description = jdElement != null ? jdElement.getAttribute("innerHTML") : "No Description Found";
 
@@ -155,11 +147,8 @@ public class ScrapeSkipTheDrive {
     private void saveJob(Job job) {
         job.status = "new";
         job.job_site = "skip-the-drive";
-        job.job_posting_date = LocalDateTime.now();
+        job.job_posting_date = LocalDate.now();
 
-        if (db.jobExists(job)) {
-            return;
-        }
         db.storeJob(job);
 
     }

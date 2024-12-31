@@ -23,8 +23,6 @@ public class LoadJobs {
             // [subtitle, search_term, description, company, title, url, status]
             for (JsonNode node : arrayNode) {
                 Job job = new Job();
-                job.subtitle = node.get("subtitle").asText();
-                job.searchTerm = node.get("search_term").asText();
                 job.description = node.get("description").asText();
                 job.company = node.get("company").asText();
                 job.title = node.get("title").asText();
