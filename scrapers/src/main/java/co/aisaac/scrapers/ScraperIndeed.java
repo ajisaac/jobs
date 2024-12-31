@@ -1,27 +1,19 @@
 package co.aisaac.scrapers;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import co.aisaac.webapp.Job;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.io.IOException;
-import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ScraperIndeed {
-    private final WebDriver driver;
+    private WebDriver driver;
     private final Database db;
 
     private final String term;
@@ -31,21 +23,23 @@ public class ScraperIndeed {
         new ScraperIndeed("Java", "Remote").run();
     }
 
-    public ScraperIndeed(String term, String location) {
+    private void resetDriver() {
+        if (driver != null) {
+            driver.quit();
+        }
         driver = new ChromeDriver();
+        driver.manage().window().setPosition(new Point(100, 50));
+        driver.manage().window().setSize(new Dimension(1400, 900));
+    }
+
+    public ScraperIndeed(String term, String location) {
         db = new Database();
         this.term = term;
         this.location = location;
     }
 
     public void run() {
-        driver.manage().window().setPosition(new Point(100, 50));
-        driver.manage().window().setSize(new Dimension(1400, 900));
-        driver.get("https://www.indeed.com");
-
-        Utils.sleep(1);
         scrape();
-
         driver.quit();
     }
 
@@ -57,6 +51,9 @@ public class ScraperIndeed {
         // if we hit 1000, we have done enough, we can stop
         while (start < 1000) {
             try {
+
+                resetDriver();
+
                 System.out.println("Scraping main page: " + url);
                 driver.get(url);
 
@@ -72,7 +69,7 @@ public class ScraperIndeed {
                 System.out.println("Found " + hrefs.size() + " URLs");
 
                 // Check if there are more pages
-                boolean hasMorePages = driver.findElements(By.cssSelector(".show_omitted_jobs")).size() > 0;
+                boolean hasMorePages = driver.findElements(By.cssSelector(".show_omitted_jobs")).isEmpty();
 
                 // Parse all the job pages
                 for (String href : links) {
@@ -107,58 +104,62 @@ public class ScraperIndeed {
 
         Utils.sleepRandom(6);
 
+        resetDriver();
+
         System.out.println("Scraping description page: " + href);
         driver.get(href);
 
-        // Hash the href to use as a filename
-        String md5Hex = "";
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] messageDigest = md.digest(href.getBytes());
-            BigInteger no = new BigInteger(1, messageDigest);
-            md5Hex = no.toString(16);
-            while (md5Hex.length() < 32) {
-                md5Hex = "0" + md5Hex;
-            }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
 
-        // Save text
-        String htmlPath = "/Users/aaron/Code/scraper-backend/data/" + md5Hex + ".html";
-        try {
-            Files.write(Paths.get(htmlPath), driver.getPageSource().getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // The driver will throw exception if it can't find the element, but we don't mind.
 
         // Parse title
-        String title = "undefined";
+        Job job = new Job();
+        job.title = null;
         try {
-            title = driver.findElement(By.cssSelector("h1.jobsearch-JobInfoHeader-title>span")).getText();
+            job.title = driver.findElement(By.cssSelector("h1.jobsearch-JobInfoHeader-title>span")).getText();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+
+        if (job.title == null) {
+            try {
+                job.title = driver.findElement(By.cssSelector("h2[data-testid=simpler-jobTitle]")).getText();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         // Parse company
-        String company = "";
+        job.company = null;
         try {
-            company = driver.findElement(By.cssSelector("div[data-company-name]>span>a")).getText();
+            job.company = driver.findElement(By.cssSelector("div[data-company-name]>span>a")).getText();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+
+        if(job.company == null){
+            // todo debug later
+            System.out.println("no company");
         }
 
         // Parse description
-        String jd = "No Description Found";
+        job.description = "No Description Found";
         try {
-            jd = driver.findElement(By.cssSelector("#jobDescriptionText")).getAttribute("innerHTML");
+            job.description = driver.findElement(By.cssSelector("#jobDescriptionText")).getAttribute("innerHTML");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
+        if(job.title == null){
+            job.title = "undefined";
+        }
+        job.url = href;
+        job.status = "new";
+        job.job_site = "indeed";
+        job.job_posting_date = LocalDate.now();
+
         // Save job
-        System.out.println("Saving job - " + title + " - " + company + " - " + href);
-//		db.storeJob(title, company, href, "", jd, "Java - Remote", "new", "", "indeed", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), htmlPath);
+        db.storeJob(job);
     }
 
     /**
@@ -170,7 +171,6 @@ public class ScraperIndeed {
         params.put("l", location);
         params.put("start", Integer.toString(start));
 
-        // todo change this to proper url builder
         StringBuilder url = new StringBuilder("https://www.indeed.com/jobs?");
         for (Map.Entry<String, String> entry : params.entrySet()) {
             if (!url.isEmpty()) {
