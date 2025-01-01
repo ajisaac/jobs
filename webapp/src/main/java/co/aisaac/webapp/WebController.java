@@ -62,6 +62,7 @@ public class WebController {
 		this.filter.setSearchTerms(filter.getSearchTerms());
 		this.filter.setJobSite(filter.getJobSite());
 		this.filter.setCompanySearch(filter.getCompanySearch());
+        this.filter.setTitleSearch(filter.getTitleSearch());
 		return "redirect:/";
 	}
 
