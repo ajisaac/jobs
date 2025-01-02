@@ -134,12 +134,27 @@ public class ScraperIndeed {
         try {
             job.company = driver.findElement(By.cssSelector("div[data-company-name]>span>a")).getText();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Company not found.");
         }
 
-        if(job.company == null){
-            // todo debug later
-            System.out.println("no company");
+        if (job.company == null) {
+            try {
+                job.company = driver.findElement(By.className("jobsearch-JobInfoHeader-companyNameSimple")).getText();
+            } catch (Exception e) {
+                System.out.println("Company not found.");
+            }
+        }
+
+        if (job.company == null) {
+            try {
+                job.company = driver.findElement(By.className("jobsearch-JobInfoHeader-companyNameLink")).getText();
+            } catch (Exception e) {
+                System.out.println("Company not found.");
+            }
+        }
+
+        if (job.company == null) {
+            System.out.println("");
         }
 
         // Parse description
@@ -150,7 +165,7 @@ public class ScraperIndeed {
             e.printStackTrace();
         }
 
-        if(job.title == null){
+        if (job.title == null) {
             job.title = "undefined";
         }
         job.url = href;
