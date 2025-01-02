@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// todo gotta clean up this whole page
 public class ScrapeSkipTheDrive {
     private static final String url = "https://www.skipthedrive.com/";
     private final WebDriver driver;
@@ -42,7 +43,6 @@ public class ScrapeSkipTheDrive {
 
 
     private void scrape() {
-        // todo, copilot wrote this, it is odd
         int start = 1;
         Integer end = null;
         String url = prepareUrl(start);
@@ -113,16 +113,10 @@ public class ScrapeSkipTheDrive {
         if (href == null) {
             return;
         }
-        if (!db.hrefExists(href)) {
-            Job job = parseDescriptionPage(href);
-            if (job != null) {
-                System.out.println("Saving job - " + job.title);
-                saveJob(job);
-            }
+        if (db.hrefExists(href)) {
+            return;
         }
-    }
 
-    private Job parseDescriptionPage(String href) {
         Utils.sleepRandom(6);
 
         Job job = new Job();
@@ -140,17 +134,13 @@ public class ScrapeSkipTheDrive {
         WebElement jdElement = driver.findElement(By.className("entry-content"));
         job.description = jdElement != null ? jdElement.getAttribute("innerHTML") : "No Description Found";
 
-        return job;
-    }
-
-
-    private void saveJob(Job job) {
         job.status = "new";
-        job.job_site = "skip-the-drive";
+        job.job_site = "skip_the_drive";
         job.job_posting_date = LocalDate.now();
 
         db.storeJob(job);
 
     }
+
 
 }
