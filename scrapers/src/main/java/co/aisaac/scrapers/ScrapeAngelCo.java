@@ -24,13 +24,6 @@ public class ScrapeAngelCo {
         String href;
         String description;
         List<JobPosting> jobPostings = new ArrayList<>();
-
-        public String asHtml() {
-            StringBuilder b = new StringBuilder();
-            b.append("<div><h2><a href=\"" + href + "\" rel=\"noopener noreferrer\" target=\"_blank\">" + name + "</a></h2></div>");
-//            b.append("<div>" + description + "</div>");
-            return b.toString();
-        }
     }
 
     private static class JobPosting {
@@ -38,15 +31,6 @@ public class ScrapeAngelCo {
         String href;
         String description;
         String companyDescription;
-
-        public String asHtml() {
-            StringBuilder b = new StringBuilder();
-
-            b.append("<div><h4><a href=\"" + href + "\" rel=\"noopener noreferrer\" target=\"_blank\">" + title + "</a></h4></div>");
-            b.append("<div>" + description + "</div>");
-            b.append("<div>" + companyDescription + "</div>");
-            return b.toString();
-        }
     }
 
     public static void main(String[] args) {
@@ -121,10 +105,6 @@ public class ScrapeAngelCo {
                 company.jobPostings.addAll(jobs);
                 companies.add(company);
             }
-
-//            print_companies_as_html(file, companies);
-//            print_startup_entries_as_html(file, startupEntries);
-
             save_jobs_to_database(companies);
 
         } catch (IOException e) {
