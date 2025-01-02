@@ -47,9 +47,9 @@ public class ScrapeWorkingNomads {
         System.out.println("Going to scrape " + links.size() + " hrefs.");
         // todo want to deduplicate these links
         // Scrape each individual page
-        int i = 0;
+        int i = 0, j = 0;
         for (String link : links) {
-            System.out.println("Scraping: " + i++ + " - " + link);
+            System.out.println("\nScraping attempt: " + i++ + " - Actual: " + j + " - " + link);
             if (db.hrefExists(link)) {
                 System.out.println("Link already exists");
                 continue;
@@ -76,7 +76,10 @@ public class ScrapeWorkingNomads {
                 job.job_site = "working_nomads";
                 job.job_posting_date = LocalDate.now();
 
-                db.storeJob(job);
+                boolean stored = db.storeJob(job);
+                if(stored){
+                    j++;
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();

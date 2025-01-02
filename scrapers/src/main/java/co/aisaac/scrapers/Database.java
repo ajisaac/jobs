@@ -53,13 +53,13 @@ public class Database {
         }
     }
 
-    public void storeJob(Job job) {
+    public boolean storeJob(Job job) {
 
         System.out.println("Saving job - " + job.title + " - " + job.company + " - " + job.url);
 
         if (jobExists(job)) {
             System.out.println("Job already exists");
-            return;
+            return false;
         }
 
         String sql = "INSERT INTO jobs(title, url, company, description, status, " +
@@ -74,9 +74,11 @@ public class Database {
             stmt.setString(6, job.job_site);
             stmt.setString(7, job.job_posting_date.toString());
             stmt.executeUpdate();
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 }
