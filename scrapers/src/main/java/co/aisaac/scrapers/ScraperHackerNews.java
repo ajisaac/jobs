@@ -18,42 +18,47 @@ public class ScraperHackerNews {
 
     public void run() {
         WebDriver driver = new ChromeDriver();
-        String url = "https://hnhiring.com/january-2025";
-        driver.manage().window().setPosition(new Point(100, 50));
-        driver.manage().window().setSize(new Dimension(1400, 900));
-        driver.get(url);
+        try {
+            String url = "https://hnhiring.com/january-2025";
+            driver.manage().window().setPosition(new Point(100, 50));
+            driver.manage().window().setSize(new Dimension(1400, 900));
+            driver.get(url);
 
-        Utils.sleepRandom(5);
+            Utils.sleepRandom(5);
 
-        driver.findElement(By.cssSelector("a[data-show-all]")).click();
+            driver.findElement(By.cssSelector("a[data-show-all]")).click();
 
-        System.out.println("Scraping main page");
-        List<WebElement> jobElements = driver.findElements(By.cssSelector("li.job>.container>.body"));
-        System.out.println("Found " + jobElements.size() + " jobElements");
+            System.out.println("Scraping main page");
+            List<WebElement> jobElements = driver.findElements(By.cssSelector("li.job>.container>.body"));
+            System.out.println("Found " + jobElements.size() + " jobElements");
 
-        Database db = new Database();
+            Database db = new Database();
 
-        for (WebElement element : jobElements) {
-            try {
-                Job job = new Job();
-                job.title = element.getText().split("\n")[0];
-                job.description = element.getAttribute("innerHTML");
-                job.url = hashMD5(job.title);
-                job.status = "new";
-                job.job_site = "hacker_news";
-                job.job_posting_date = LocalDate.now();
+            for (WebElement element : jobElements) {
+                try {
+                    Job job = new Job();
+                    job.title = element.getText().split("\n")[0];
+                    job.description = element.getAttribute("innerHTML");
+                    job.url = hashMD5(job.title);
+                    job.status = "new";
+                    job.job_site = "hacker_news";
+                    job.job_posting_date = LocalDate.now();
 
-                job.company = "";
+                    job.company = "";
 
-                db.storeJob(job);
+                    db.storeJob(job);
 
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
 
+                }
             }
+            driver.quit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            driver.quit();
         }
-
-        driver.quit();
     }
 
     public static String hashMD5(String input) {
