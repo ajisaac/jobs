@@ -11,24 +11,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class ScraperHackerNews {
-    private final WebDriver driver;
-    private final Database db;
-
-    private final String url;
 
     public static void main(String[] args) {
-        String url = "https://hnhiring.com/december-2024";
-        new ScraperHackerNews(url).run();
+        new ScraperHackerNews().run();
     }
-
-    public ScraperHackerNews(String url) {
-        driver = new ChromeDriver();
-        db = new Database();
-        this.url = url;
-    }
-
 
     public void run() {
+        WebDriver driver = new ChromeDriver();
+        String url = "https://hnhiring.com/january-2025";
         driver.manage().window().setPosition(new Point(100, 50));
         driver.manage().window().setSize(new Dimension(1400, 900));
         driver.get(url);
@@ -40,6 +30,8 @@ public class ScraperHackerNews {
         System.out.println("Scraping main page");
         List<WebElement> jobElements = driver.findElements(By.cssSelector("li.job>.container>.body"));
         System.out.println("Found " + jobElements.size() + " jobElements");
+
+        Database db = new Database();
 
         for (WebElement element : jobElements) {
             try {
