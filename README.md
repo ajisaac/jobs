@@ -30,7 +30,9 @@ For the design, I was going for simple, easy to use, effective.
 
 There's only a few features. 
 - One is the main page, where you can see all the job listings in your database.
-![501B9044-D739-4C63-81D9-30AB90CAD34B_1_201_a](https://github.com/user-attachments/assets/2f18cc67-3e96-4e7b-bbab-26d2927dcb9b)
+<img width="935" alt="6E518C71-877C-4388-A276-600196E2CF77" src="https://github.com/user-attachments/assets/97192998-235c-4a0c-ba65-f53ff94e2e61" />
+![501B9044-D739-4C63-81D9-30AB90CAD34B_1_201_a](https://github.com/user-attachments/assets/5ae94fff-7fd4-4f94-955b-7605ecbf3032)
+
 
 - Underneath the job title, you can click one of the status buttons to categorize the job posting. As soon as you click, the job posting status in the database is updated, and the posting is removed from your viewpoint so you can immediately look at the next job posting.
 ![AEBE8FC9-4901-4256-B9CB-78BEE0A68E03_1_201_a](https://github.com/user-attachments/assets/f023b7c4-9db9-4917-a877-1ec5ab057b1c)
