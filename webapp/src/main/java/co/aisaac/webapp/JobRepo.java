@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+// todo switch away from JPA
 @Repository
 public interface JobRepo extends CrudRepository<Job, Long> {
 

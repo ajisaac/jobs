@@ -130,7 +130,7 @@ public class WebController {
 
 
 		// highlight search term
-		highlight(searchTerms, filtered, "highlight");
+		highlight(searchTerms, filtered);
 
 		// sort
 		filtered = filtered.stream().sorted((o1, o2) -> o1.company.compareToIgnoreCase(o2.company)).toList();
@@ -160,13 +160,13 @@ public class WebController {
 		}
 	}
 
-	private void highlight(List<String> searchTerms, List<Job> filtered, String className) {
+	private void highlight(List<String> searchTerms, List<Job> filtered) {
 		if (searchTerms.isEmpty()) return;
 		if (filtered.isEmpty()) return;
 
 		for (String searchTerm : searchTerms) {
 			String pattern = "(?i)" + Pattern.quote(searchTerm.trim());
-			String st = "<span class=\"" + className + "\">" + searchTerm + "</span>";
+			String st = "<span class=\"highlight\">" + searchTerm + "</span>";
 			// for each search term
 			for (Job job : filtered) {
 				job.description = job.description.replaceAll(pattern, st);
