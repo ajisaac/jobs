@@ -9,21 +9,18 @@ Here's some of the problems I had with job boards in general when job hunting or
 - Lots of irrelevant job postings that just matched a keyword in your search.
 - You won't end up seeing some jobs. A board may have 3,000 remote java jobs, but you're not going to make it to the end
   page of results.
-- Most job portals use a ridiculous amount of JavaScript, things are lagging all over the place, nothing is snappy or crisp.
+- Job boards really spam you with all these extra features, it's annoying.
 
 ## Design goals
 
 For the design, I was going for simple, easy to use, effective.
 
-- The styling of the program is optimal for quickly reading lots of data.
-  - I find this design to be best, minimal without distraction, just show me the data.
-- I don't want any extra clutter on the page, just the job description, and a few buttons.
+- The styling of the program is optimal for quickly reading lots of job postings. No animations, no distracting color scheme, no UI, just pure data.
+- I don't want any extra clutter on the page, just the job description, and a few links.
 - Should run very fast. I run everything locally on the same machine to reduce latency. Pure JavaScript is a must, no frameworks or libraries. 
 - Small amount of code, no abstractions, no low value features.
   - Less code means I can make an update to logic in about 10 minutes.
-  - I can add a new scraper in a single file, using a single function as pure Java.
-  - No low value features. 
-  - I had spring security setup for auth, but auth isn't useful for local web apps, so I removed it.
+  - I can add a new scraper in a single file, using a single function in simple Java.
   - The scrapers used to have shared code in the form of inheritence, but there was no value in this.
 
 ## Features
@@ -49,16 +46,9 @@ There's only a few features.
 - The app is very minimal and fast. Here is all that is loaded when you visit the page.
 ![image](https://github.com/user-attachments/assets/6e05f90d-218a-4ef4-bfc0-f11aa1010e32)
 
-
-## Usage
-
-Using this program, I'm able to pull down 4,000 job postings or more at a time. After the job postings are in the database on my machine, I go to the "titles" page, where I can spend a few hours and rapidly categorize those postings. After this, I'll start looking through the actual job postings on the main page. I like to look at all the postings from one site, then move on to the next site. HackerNews, AngelCo, and Indeed all have very different types of postings, so doing one site at a time is optimal.
-
 ## Installing
 
-I usually run this program directly from my IDE so I can debug in real time and fix bugs that appear as I'm using the program. You'll need to set up Intellij or some Java IDE. Also will need to set up MySQL. I use docker for mysql, but with persistent storage. There's a docker compose file you can use. For the schema, there's a single database table called "jobs" that you can find in the sql folder. You'll need to change paths in the program, so do a search on "aaron" and update accordingly. Probably you should just read all the code first to get an idea of how the program works, it's really not very much code.
-
-The code uses thymeleaf for templating, basic spring boot, spring jpa, some regular java code for scrapers (though you can write those in any language and store the jobs directly in the jobs table). The project has 2 maven modules, refer to the .pom files to understand. One of the modules relies on the other. I may merge these into a single module for simplicity.
+I don't intend for anyone to actually use this software, so it's not published. To use it, you'd need to update any file paths on your machine, then set up your database, configure everything. Best to read through the code to understand the app.
 
 ## Todo
 
